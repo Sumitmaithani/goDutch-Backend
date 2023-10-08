@@ -49,7 +49,13 @@ app.post("/register", async (req, res) => {
       image,
     });
     await newUser.save();
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({
+      message: "User created successfully",
+      name: username,
+      email: email,
+      image: image,
+      id: newUser.id,
+    });
   } catch (error) {
     res.status(500).json({ error: "Error signing up" });
   }
@@ -81,7 +87,13 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "1hr",
     });
-    res.json({ message: "Login successful" });
+    res.json({
+      message: "Login successful",
+      name: user.name,
+      email: user.email,
+      image: user.image,
+      id: user.id,
+    });
   } catch (error) {
     res.status(500).json({ error: "Error logging in" });
   }
